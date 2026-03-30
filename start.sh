@@ -111,6 +111,17 @@ Dashboard_Dir="$Server_Dir/dashboard/public"
 sed -ri "s@^# external-ui:.*@external-ui: ${Dashboard_Dir}@g" "$Conf_Dir/config.yaml"
 sed -r -i '/^secret: /s@(secret: ).*@\1'"${Secret}"'@g' "$Conf_Dir/config.yaml"
 
+# 替换端口配置（从 .env 读取）
+if [ -n "$CLASH_HTTP_PORT" ]; then
+    sed -i "s/^port: .*/port: ${CLASH_HTTP_PORT}/" "$Conf_Dir/config.yaml"
+fi
+if [ -n "$CLASH_SOCKS_PORT" ]; then
+    sed -i "s/^socks-port: .*/socks-port: ${CLASH_SOCKS_PORT}/" "$Conf_Dir/config.yaml"
+fi
+if [ -n "$CLASH_API_PORT" ]; then
+    sed -i "s/^external-controller: .*/external-controller: '0.0.0.0:${CLASH_API_PORT}'/" "$Conf_Dir/config.yaml"
+fi
+
 ## 启动 Clash 服务
 echo -e '\n正在启动Clash服务...'
 Text5="服务启动成功！"

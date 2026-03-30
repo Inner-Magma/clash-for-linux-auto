@@ -9,6 +9,10 @@ CLASH_DIR=$(dirname "$_AUTO_PROXY_DIR")
 unset _AUTO_PROXY_DIR
 
 source "$CLASH_DIR/scripts/common.sh"
+load_env "$CLASH_DIR"
+
+CLASH_HTTP_PORT=${CLASH_HTTP_PORT:-7890}
+CLASH_API_PORT=${CLASH_API_PORT:-9090}
 
 # 检查 Clash 是否在运行，未运行则启动
 if ! is_clash_running; then
@@ -26,10 +30,10 @@ fi
 
 # 检查 Clash API 是否可用
 if wait_clash_api 5; then
-    export http_proxy=http://127.0.0.1:7890
-    export https_proxy=http://127.0.0.1:7890
-    export HTTP_PROXY=http://127.0.0.1:7890
-    export HTTPS_PROXY=http://127.0.0.1:7890
+    export http_proxy="http://127.0.0.1:${CLASH_HTTP_PORT}"
+    export https_proxy="http://127.0.0.1:${CLASH_HTTP_PORT}"
+    export HTTP_PROXY="http://127.0.0.1:${CLASH_HTTP_PORT}"
+    export HTTPS_PROXY="http://127.0.0.1:${CLASH_HTTP_PORT}"
     export no_proxy=127.0.0.1,localhost
     export NO_PROXY=127.0.0.1,localhost
     log_ok "Clash 代理已自动开启"
@@ -50,13 +54,14 @@ fi
 
 # proxy_on / proxy_off 快捷函数
 proxy_on() {
-    export http_proxy=http://127.0.0.1:7890
-    export https_proxy=http://127.0.0.1:7890
-    export HTTP_PROXY=http://127.0.0.1:7890
-    export HTTPS_PROXY=http://127.0.0.1:7890
+    local port="${CLASH_HTTP_PORT:-7890}"
+    export http_proxy="http://127.0.0.1:${port}"
+    export https_proxy="http://127.0.0.1:${port}"
+    export HTTP_PROXY="http://127.0.0.1:${port}"
+    export HTTPS_PROXY="http://127.0.0.1:${port}"
     export no_proxy=127.0.0.1,localhost
     export NO_PROXY=127.0.0.1,localhost
-    echo -e "\033[32m[√] 已开启代理\033[0m"
+    echo -e "\033[32m[√] 已开启代理 (port: ${port})\033[0m"
 }
 
 proxy_off() {

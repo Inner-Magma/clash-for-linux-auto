@@ -10,7 +10,7 @@ SERVER_DIR=$(dirname "$SCRIPT_DIR")
 source "$SCRIPT_DIR/common.sh"
 load_env "$SERVER_DIR"
 
-api_url="http://localhost:9090"
+api_url="http://localhost:${CLASH_API_PORT:-9090}"
 Secret="${CLASH_SECRET:?Error: CLASH_SECRET not set in .env}"
 DEFAULT_GROUP="${CLASH_GROUP:-Ghelper}"
 modes=("Rule" "Global" "Direct")

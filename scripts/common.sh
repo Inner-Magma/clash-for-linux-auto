@@ -59,7 +59,7 @@ wait_clash_api() {
     local timeout=${1:-10}
     local i=0
     while [ $i -lt $timeout ]; do
-        if curl -s -o /dev/null -w "%{http_code}" -m 1 http://127.0.0.1:9090 2>/dev/null | grep -q '[2345][0-9][0-9]'; then
+        if curl -s -o /dev/null -w "%{http_code}" -m 1 "http://127.0.0.1:${CLASH_API_PORT:-9090}" 2>/dev/null | grep -q '[2345][0-9][0-9]'; then
             return 0
         fi
         sleep 1
