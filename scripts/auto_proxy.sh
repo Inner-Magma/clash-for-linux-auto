@@ -25,7 +25,7 @@ if ! is_clash_running; then
 fi
 
 # 检查 Clash API 是否可用
-if wait_clash_api 3; then
+if wait_clash_api 5; then
     export http_proxy=http://127.0.0.1:7890
     export https_proxy=http://127.0.0.1:7890
     export HTTP_PROXY=http://127.0.0.1:7890
