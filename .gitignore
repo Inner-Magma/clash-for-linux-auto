@@ -1,0 +1,17 @@
+# 敏感配置（含订阅地址和密钥）
+.env
+
+# 运行时生成
+logs/
+temp/clash.yaml
+temp/clash_config.yaml
+temp/config.yaml
+temp/proxy.txt
+conf/config.yaml
+conf/cache.db
+
+# 系统文件
+*.swp
+*.swo
+*~
+.DS_Store
